@@ -42,6 +42,9 @@
         <div class="card-header">
           <i class="bi bi-info-circle"></i>
           イベントの説明
+          <% if @event.only_woman %>
+          <p>女性限定</p>
+        <% end %>
         </div>
         <div class="card-body">
           <%= simple_format @event.content %>
