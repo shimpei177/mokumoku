@@ -14,6 +14,9 @@
             <h1>
               <%= @event.title %>
             </h1>
+            <% if @event.only_woman %>
+              <span class="badge bg-danger" id='event_only_woman'>女性限定</span>
+            <% end %>
             <% if logged_in? %>
               <div class="ms-auto">
                 <% if current_user.own?(@event) %>
@@ -42,9 +45,6 @@
         <div class="card-header">
           <i class="bi bi-info-circle"></i>
           イベントの説明
-          <% if @event.only_woman %>
-          <p>女性限定</p>
-        <% end %>
         </div>
         <div class="card-body">
           <%= simple_format @event.content %>
@@ -86,7 +86,7 @@
           </h4>
           <hr />
           <div class="text-center">
-            <% if logged_in? %>
+          <% if logged_in? && current_user.gender == 'woman'  %>
               <% if !current_user.owner?(@event) %>
                 <% if current_user.attend?(@event) %>
                   <%= link_to 'キャンセルする',
@@ -119,7 +119,6 @@
            </ul>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header">
           <i class="bi bi-chat"></i>
@@ -128,7 +127,6 @@
         <div class="card-body">
           <ul class="list-unstyled">
             <%= render partial: 'events/comment', collection: @event.comments %>
-
           </ul>
           <%= form_with model: [@event, @comment || Comment.new] do |f| %>
             <div class="mb-3">
