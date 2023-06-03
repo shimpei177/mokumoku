@@ -1,5 +1,8 @@
 <div class="col">
   <div class="card h-100">
+  <% if event.only_woman? %>
+    <span id= 'event_only_woman' class="badge bg-danger">女性限定</span>
+  <% end %>
     <%= link_to event_path(event) do %>
       <%= image_tag event.decorate.thumbnail, class: 'card-img-top border-bottom' %>
     <% end %>
